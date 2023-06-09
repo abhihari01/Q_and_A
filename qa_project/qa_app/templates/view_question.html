@@ -1,0 +1,47 @@
+<!-- <h2>{{ question.title }}</h2>
+<p>{{ question.content }}</p>
+
+<a href="{% url 'home' %}"><button>Home</button></a>
+
+<h3>Answers:</h3>
+<ul>
+  {% for answer in answers %}
+    <li>
+      {{ answer.content }}
+      <a href="{% url 'like_answer' answer.id %}">Like</a>
+    </li>
+  {% endfor %}
+</ul>
+
+<h3>Answer the Question:</h3>
+<form method="POST" action="{% url 'answer_question' question.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Answer</button>
+</form> -->
+
+
+<h2>{{ question.title }}</h2>
+<p>{{ question.content }}</p>
+
+<a href="{% url 'home' %}"><button>Home</button></a>
+
+<h3>Answers:</h3>
+<ul>
+  {% for answer in answers %}
+    <li>
+      {{ answer.content }}
+      <a href="{% url 'like_answer' answer.id %}">Like</a>
+      <span> Likes: {{ answer.likes.count }}</span>
+    </li>
+  {% endfor %}
+</ul>
+
+<h3>Answer the Question:</h3>
+<form method="POST" action="{% url 'answer_question' question.id %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Answer</button>
+</form>
+
+
