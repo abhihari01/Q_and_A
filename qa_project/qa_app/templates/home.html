@@ -1,13 +1,28 @@
-<h2>Home</h2>
-<a href="{% url 'signout' %}">Sign Out</a>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'qa_app/style.css' %}">
 
-<h3>Questions:</h3>
-<ul>
-  {% for question in questions %}
-    <li>
-      <a href="{% url 'view_question' question.id %}">{{ question.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
+</head>
+<body>
+  {% include 'navbar.html' %}
 
-<a href="{% url 'ask_question' %}">Ask a Question</a>
+  <div class="container">
+    <h2>Welcome to the Q&A App</h2>
+    <h3>Questions:</h3>
+    <ul>
+      {% for question in questions %}
+        <li>
+          <a href="{% url 'view_question' question.id %}">{{ question.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'ask_question' %}" class="btn">Ask a Question</a>
+  </div>
+
+  {% include 'footer.html' %}
+
+</body>
+</html>

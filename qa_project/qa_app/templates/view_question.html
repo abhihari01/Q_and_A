@@ -1,47 +1,44 @@
-<!-- <h2>{{ question.title }}</h2>
-<p>{{ question.content }}</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'qa_app/style.css' %}">
+</head>
+<body>
+  {% include 'navbar.html' %}
 
-<a href="{% url 'home' %}"><button>Home</button></a>
-
-<h3>Answers:</h3>
-<ul>
-  {% for answer in answers %}
-    <li>
-      {{ answer.content }}
-      <a href="{% url 'like_answer' answer.id %}">Like</a>
-    </li>
-  {% endfor %}
-</ul>
-
-<h3>Answer the Question:</h3>
-<form method="POST" action="{% url 'answer_question' question.id %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Answer</button>
-</form> -->
+  <div class="container">
+    <h2>{{ question.title }}</h2>
+    <p>{{ question.content }}</p>
 
 
-<h2>{{ question.title }}</h2>
-<p>{{ question.content }}</p>
-
-<a href="{% url 'home' %}"><button>Home</button></a>
-
-<h3>Answers:</h3>
-<ul>
-  {% for answer in answers %}
-    <li>
-      {{ answer.content }}
-      <a href="{% url 'like_answer' answer.id %}">Like</a>
-      <span> Likes: {{ answer.likes.count }}</span>
-    </li>
-  {% endfor %}
-</ul>
-
-<h3>Answer the Question:</h3>
-<form method="POST" action="{% url 'answer_question' question.id %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Answer</button>
-</form>
+    <form method="post" action="{% url 'delete_question' question.id %}">
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
 
 
+    <h3>Answers:</h3>
+    <ul>
+      {% for answer in answers %}
+        <li>
+          <p>{{ answer.content }}</p>
+          <a href="{% url 'like_answer' answer.id %}" class="btn">Like</a>
+          <span>Likes: {{ answer.likes.count }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Answer the Question:</h3>
+    <form method="POST" action="{% url 'answer_question' question.id %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Answer</button>
+    </form>
+  </div>
+
+  {% include 'footer.html' %}
+
+</body>
+</html>

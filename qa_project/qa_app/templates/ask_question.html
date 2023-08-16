@@ -1,6 +1,25 @@
-<h2>Ask a Question</h2>
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Ask</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'qa_app/style.css' %}">
+</head>
+<body>
+  {% include 'navbar.html' %}
+
+
+  <div class="container">
+    <h2>Ask a Question</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="{{ form.title.id_for_label }}">Title:</label>
+      {{ form.title }}
+      <label for="{{ form.content.id_for_label }}">Content:</label>
+      {{ form.content }}
+      <button type="submit">Ask</button>
+    </form>
+  </div>
+
+  {% include 'footer.html' %}
+</body>
+</html>

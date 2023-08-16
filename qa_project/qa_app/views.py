@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Question, Answer, Like
 from .forms import SignUpForm, SignInForm, QuestionForm, AnswerForm
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 
@@ -44,50 +45,6 @@ def home(request):
     questions = Question.objects.all()
     return render(request, 'home.html', {'questions': questions})
 
-
-# @login_required
-# def ask_question(request):
-#     if request.method == 'POST':
-#         form = QuestionForm(request.POST)
-#         if form.is_valid():
-#             question = form.save(commit=False)
-#             question.user = request.user
-#             question.save()
-#             return redirect('home')
-#     else:
-#         form = QuestionForm()
-#     return render(request, 'ask_question.html', {'form': form})
-
-
-
-# from django.db.utils import OperationalError
-# from django.shortcuts import render, redirect
-# from .models import Question
-# from .forms import QuestionForm
-# from django.contrib.auth.decorators import login_required
-
-# @login_required
-# def ask_question(request):
-#     try:
-#         if request.method == 'POST':
-#             form = QuestionForm(request.POST)
-#             if form.is_valid():
-#                 question = form.save(commit=True)
-#                 question.user = request.user
-#                 question.save()
-#                 return redirect('home')
-#         else:
-#             form = QuestionForm()
-#     except OperationalError:
-#         # Handle database connection error
-#         return render(request, 'error.html', {'message': 'Database connection error'})
-#     return render(request, 'ask_question.html', {'form': form})
-
-
-from django.shortcuts import render, redirect
-from .models import Question
-from .forms import QuestionForm
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def ask_question(request):
@@ -138,3 +95,9 @@ def like_answer(request, answer_id):
         like = Like(user=user, answer=answer)
         like.save()
     return redirect('view_question', question_id=answer.question.id)
+
+@require_POST
+def delete_question(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    question.delete()
+    return redirect('home')
